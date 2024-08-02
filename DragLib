@@ -1,6 +1,5 @@
 function Drag(gui)
     local UserInputService = game:GetService("UserInputService")
-    print(gui.Name)
 
     local dragging
     local dragInput
