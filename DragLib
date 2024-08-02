@@ -1,4 +1,4 @@
-function Drag()
+function Drag(gui)
     local UserInputService = game:GetService("UserInputService")
 
 
