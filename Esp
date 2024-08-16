@@ -15,7 +15,8 @@ for _, p in pairs(Players:GetPlayers()) do
         AddHighlight(p)
     end)
 end
-
+print("e")
 Players.PlayerAdded:Connect(function(player)
     AddHighlight(player)
+    print(player.Name .. "joined •esp•")
 end)
