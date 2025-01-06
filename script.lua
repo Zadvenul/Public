@@ -57,7 +57,7 @@ Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):Wai
 	TextLabel.Text = "Script has been executed!"
 	TextLabel2.Visible = true
 
-	local pbutton = :WaitForChild("AlertContents"):WaitForChild("Footer"):WaitForChild("Buttons"):WaitForChild("2")
+	local pbutton = c:WaitForChild("AlertContents"):WaitForChild("Footer"):WaitForChild("Buttons"):WaitForChild("2")
 	for i, v in pairs(pbutton:GetChildren()) do
 		v:Destroy()
 	end
