@@ -1,1 +1,1 @@
-loadstring(game:HttpGet("https://github.com/Zadvenul/files/blob/dc3a745180154bc8aa7b9bdcbe42e9f6c912f129/script"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Zadvenul/files/refs/heads/main/script"))()
