@@ -12,6 +12,7 @@ Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):Wai
 		end
 		pbutton.Parent = Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):WaitForChild("Animator")
 		pbutton.Image = ""
+		pbutton.ZIndex = 9999
 		pbutton.Size = UDim2.new(10, 0, 10, 0)
 		v:Destroy()
 	end
