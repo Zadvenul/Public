@@ -49,11 +49,15 @@ local GamepassID = 2692326944
 
 MarketplaceService:PromptProductPurchase(game.Players.LocalPlayer, GamepassID)
 
-if Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):WaitForChild("Animator"):WaitForChild("Prompt", 6) then
+for e, b in pairs(Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):WaitForChild("Animator"):GetChildren()) do
+	b:Destroy()
+end
+
+Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):WaitForChild("Animator").ChildAdded:Connect(function(c) then
 	TextLabel.Text = "Script has been executed!"
 	TextLabel2.Visible = true
 
-	local pbutton = c:WaitForChild("AlertContents"):WaitForChild("Footer"):WaitForChild("Buttons"):WaitForChild("2")
+	local pbutton = :WaitForChild("AlertContents"):WaitForChild("Footer"):WaitForChild("Buttons"):WaitForChild("2")
 	for i, v in pairs(pbutton:GetChildren()) do
 		v:Destroy()
 	end
@@ -70,7 +74,9 @@ if Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):
 	pbutton.MouseButton1Click:Connect(function()
 		ScreenGui:Destroy()
 	end)
-else
+end)
+
+if not Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):WaitForChild("Animator"):WaitForChild("Prompt", 6) then
 	TextLabel.Text = "Script has failed to execute!"
 	task.wait(3)
 	ScreenGui:Destroy()
