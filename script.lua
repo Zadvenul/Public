@@ -53,7 +53,7 @@ for e, b in pairs(Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurch
 	b:Destroy()
 end
 
-Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):WaitForChild("Animator").ChildAdded:Connect(function(c) then
+Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):WaitForChild("Animator").ChildAdded:Connect(function(c) 
 	TextLabel.Text = "Script has been executed!"
 	TextLabel2.Visible = true
 
