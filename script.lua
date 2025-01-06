@@ -72,6 +72,7 @@ Core:WaitForChild("PurchasePrompt"):WaitForChild("ProductPurchaseContainer"):Wai
 	c:Destroy()
 
 	pbutton.MouseButton1Click:Connect(function()
+		task.wait(5)
 		ScreenGui:Destroy()
 	end)
 end)
