@@ -1,4 +1,4 @@
-_G.CAP_isPlaying = true
+_G.CAP_IsPlaying = true
 
 local character = game:GetService("Players").LocalPlayer.Character
 local root = character:WaitForChild("HumanoidRootPart")
@@ -49,14 +49,15 @@ heartbeat = game:GetService("RunService").Heartbeat:Connect(function()
 	local YVector = Vector3.new(data[offset+5], data[offset+8], data[offset+11])
 	local ZVector = Vector3.new(data[offset+6], data[offset+9], data[offset+12])
 
-	if (position - pastPosition).Magnitude > 1 then
+	if (position - pastPosition).Magnitude > 4 then
 		character.Animate.Enabled = true
 		humanoid:MoveTo(position)
 		humanoid.MoveToFinished:Wait()
 		character.Animate.Enabled = false
 	else
     	root.CFrame = CFrame.fromMatrix(position, XVector, YVector, ZVector)
-		coroutine.wrap(function()
+
+    	coroutine.wrap(function()
 			playAnimation(data[offset+13])
 		end)()
 	end
@@ -65,10 +66,9 @@ heartbeat = game:GetService("RunService").Heartbeat:Connect(function()
         print("Playback done.")
         heartbeat:Disconnect()
         character.Animate.Enabled = true
-		_G.CAP_isPlaying = false
+		_G.CAP_IsPlaying = false
     else
         frameIndex += 1
 		pastPosition = position
     end
 end)
-
