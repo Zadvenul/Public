@@ -1,3 +1,5 @@
+_G.CAP_isPlaying = true
+
 local character = game:GetService("Players").LocalPlayer.Character
 local root = character:WaitForChild("HumanoidRootPart")
 local humanoid = character:WaitForChild("Humanoid")
@@ -56,6 +58,7 @@ heartbeat = game:GetService("RunService").Heartbeat:Connect(function()
         print("Playback done.")
         heartbeat:Disconnect()
         character.Animate.Enabled = true
+		_G.CAP_isPlaying = false
     else
         frameIndex += 1
     end
