@@ -39,6 +39,7 @@ data = readfile("./RAP/data.txt"):sub(1, -2):gsub("p ", ""):split(" ")
 
 character.Animate.Enabled = false
 
+local pastPosition = root.CFrame.Position
 local frameIndex = 1
 heartbeat = game:GetService("RunService").Heartbeat:Connect(function()
     local offset = (frameIndex - 1)*13
@@ -48,11 +49,17 @@ heartbeat = game:GetService("RunService").Heartbeat:Connect(function()
 	local YVector = Vector3.new(data[offset+5], data[offset+8], data[offset+11])
 	local ZVector = Vector3.new(data[offset+6], data[offset+9], data[offset+12])
 
-    root.CFrame = CFrame.fromMatrix(position, XVector, YVector, ZVector)
-
-    coroutine.wrap(function()
-		playAnimation(data[offset+13])
-	end)()
+	if (position - pastPosition).Magnitude > 4 then
+		character.Animate.Enabled = true
+		humanoid:MoveTo(position)
+		humanoid.MoveToFinished:Wait()
+		character.Animate.Enabled = false
+	else
+    	root.CFrame = CFrame.fromMatrix(position, XVector, YVector, ZVector)
+    	coroutine.wrap(function()
+			playAnimation(data[offset+13])
+		end)()
+	end
 
     if frameIndex == #data/13 then
         print("Playback done.")
@@ -61,5 +68,6 @@ heartbeat = game:GetService("RunService").Heartbeat:Connect(function()
 		_G.CAP_IsPlaying = false
     else
         frameIndex += 1
+		pastPosition = position
     end
 end)
