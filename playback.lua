@@ -4,11 +4,11 @@ local character = game:GetService("Players").LocalPlayer.Character
 local root = character:WaitForChild("HumanoidRootPart")
 local humanoid = character:WaitForChild("Humanoid")
 
-local runAnimation = humanoid:LoadAnimation(character:WaitForChild("Animate"):WaitForChild("run"):GetChildren()[1])
-local jumpAnimation = humanoid:LoadAnimation(character:WaitForChild("Animate"):WaitForChild("jump"):GetChildren()[1])
-local fallAnimation = humanoid:LoadAnimation(character:WaitForChild("Animate"):WaitForChild("fall"):GetChildren()[1])
-local idleAnimation = humanoid:LoadAnimation(character:WaitForChild("Animate"):WaitForChild("idle"):GetChildren()[1])
-local climbAnimation = humanoid:LoadAnimation(character:WaitForChild("Animate"):WaitForChild("climb"):GetChildren()[1])
+local runAnimationTrack = humanoid:LoadAnimation(character:WaitForChild("Animate"):WaitForChild("run"):GetChildren()[1])
+local jumpAnimationTrack = humanoid:LoadAnimation(character:WaitForChild("Animate"):WaitForChild("jump"):GetChildren()[1])
+local fallAnimationTrack = humanoid:LoadAnimation(character:WaitForChild("Animate"):WaitForChild("fall"):GetChildren()[1])
+local idleAnimationTrack = humanoid:LoadAnimation(character:WaitForChild("Animate"):WaitForChild("idle"):GetChildren()[1])
+local climbAnimationTrack = humanoid:LoadAnimation(character:WaitForChild("Animate"):WaitForChild("climb"):GetChildren()[1])
 
 local function stopAnimations()
 	for _, animationTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
@@ -17,21 +17,21 @@ local function stopAnimations()
 end
 
 local function playAnimation(humanoidState)
-	if humanoidState == "r" and runAnimation.IsPlaying == false then
+	if humanoidState == "r" and runAnimationTrack.IsPlaying == false then
 		stopAnimations()
-		runAnimation:Play()
-	elseif humanoidState == "j" and jumpAnimation.IsPlaying == false then
+		runAnimationTrack:Play()
+	elseif humanoidState == "j" and jumpAnimationTrack.IsPlaying == false then
 		stopAnimations()
-		jumpAnimation:Play()
-	elseif humanoidState == "f" and fallAnimation.IsPlaying == false then
+		jumpAnimationTrack:Play()
+	elseif humanoidState == "f" and fallAnimationTrack.IsPlaying == false then
 		stopAnimations()
-		fallAnimation:Play()
-	elseif humanoidState == "i" and idleAnimation.IsPlaying == false then
+		fallAnimationTrack:Play()
+	elseif humanoidState == "i" and idleAnimationTrack.IsPlaying == false then
 		stopAnimations()
-		idleAnimation:Play()
-	elseif humanoidState == "c" and climbAnimation.IsPlaying == false then
+		idleAnimationTrack:Play()
+	elseif humanoidState == "c" and climbAnimationTrack.IsPlaying == false then
 		stopAnimations()
-		climbAnimation:Play()
+		climbAnimationTrack:Play()
 	end
 end
 
@@ -39,7 +39,6 @@ data = readfile("./RAP/data.txt"):sub(1, -2):gsub("p ", ""):split(" ")
 
 character.Animate.Enabled = false
 
-local pastPosition = root.CFrame.Position
 local frameIndex = 1
 heartbeat = game:GetService("RunService").Heartbeat:Connect(function()
     local offset = (frameIndex - 1)*13
@@ -48,26 +47,22 @@ heartbeat = game:GetService("RunService").Heartbeat:Connect(function()
 	local XVector = Vector3.new(data[offset+4], data[offset+7], data[offset+10])
 	local YVector = Vector3.new(data[offset+5], data[offset+8], data[offset+11])
 	local ZVector = Vector3.new(data[offset+6], data[offset+9], data[offset+12])
+	
+    root.CFrame = CFrame.fromMatrix(position, XVector, YVector, ZVector)
 
-	if (position - pastPosition).Magnitude > 4 then
-		character.Animate.Enabled = true
-		humanoid:MoveTo(position)
-		humanoid.MoveToFinished:Wait()
-		character.Animate.Enabled = false
-	else
-    	root.CFrame = CFrame.fromMatrix(position, XVector, YVector, ZVector)
-    	coroutine.wrap(function()
-			playAnimation(data[offset+13])
-		end)()
-	end
+	playAnimation(data[offset+13])
 
     if frameIndex == #data/13 then
         print("Playback done.")
         heartbeat:Disconnect()
+		runAnimationTrack:Destroy()
+		jumpAnimationTrack:Destroy()
+		fallAnimationTrack:Destroy()
+		idleAnimationTrack:Destroy()
+		climbAnimationTrack:Destroy()
         character.Animate.Enabled = true
 		_G.CAP_IsPlaying = false
     else
         frameIndex += 1
-		pastPosition = position
     end
 end)
