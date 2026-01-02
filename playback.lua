@@ -23,7 +23,7 @@ local function playAnimation(humanoidState)
 	elseif humanoidState == "j" and jumpAnimationTrack.IsPlaying == false then
 		stopAnimations()
 		jumpAnimationTrack:Play()
-	elseif humanoidState == "f" and jumpAnimationTrack.IsPlaying == false then
+	elseif humanoidState == "f" and jumpAnimationTrack.IsPlaying == false and fallAnimationTrack.IsPlaying == false then
 		stopAnimations()
 		fallAnimationTrack:Play()
 	elseif humanoidState == "i" and idleAnimationTrack.IsPlaying == false then
